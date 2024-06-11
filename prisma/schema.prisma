@@ -15,22 +15,31 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id       String       @id @default(uuid())
   name     String
-  email    String   @unique
+  email    String       @unique
   password String
-  emblems  Emblem[]
+  emblems  UserEmblem[]
 
   @@map("users")
 }
 
 model Emblem {
-  id     String  @id @default(uuid())
-  slug   String  @unique
-  name   String
-  image  String
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  id    String       @id @default(uuid())
+  slug  String       @unique
+  name  String
+  image String
+  users UserEmblem[]
 
   @@map("emblems")
+}
+
+model UserEmblem {
+  userId   String
+  emblemId String
+  user     User   @relation(fields: [userId], references: [id])
+  emblem   Emblem @relation(fields: [emblemId], references: [id])
+
+  @@id([userId, emblemId])
+  @@map("user_emblems")
 }
