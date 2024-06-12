@@ -1,0 +1,13 @@
+{
+  "editor.tabSize": 2,
+  "editor.rulers": [80, 120],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "symbols.files.associations": {
+    "vitest.config.e2e.ts": "vite",
+    "vitest.config.ts": "vite",
+    "*.module.ts": "nest"
+  }
+}
