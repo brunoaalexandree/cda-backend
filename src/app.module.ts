@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { EmblemsController } from './controllers/emblems.controller';
 import { RedeemEmblemController } from './controllers/redeem-emblem.controller';
+import { UserController } from './controllers/user.controller';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { RedeemEmblemController } from './controllers/redeem-emblem.controller';
     AuthenticateController,
     EmblemsController,
     RedeemEmblemController,
+    UserController,
   ],
   providers: [PrismaService],
 })

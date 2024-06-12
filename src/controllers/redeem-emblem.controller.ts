@@ -8,10 +8,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { CurrentUser } from 'src/auth/current-user-decorator';
-import { TokenSchema } from 'src/auth/jwt.strategy';
-import { ZodValidationPipe } from 'src/pipes/zod-validation';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CurrentUser } from '@/auth/current-user-decorator';
+import { TokenSchema } from '@/auth/jwt.strategy';
+import { ZodValidationPipe } from '@/pipes/zod-validation';
+import { PrismaService } from '@/prisma/prisma.service';
 import { z } from 'zod';
 
 const redeemEmblemBodySchema = z.object({
