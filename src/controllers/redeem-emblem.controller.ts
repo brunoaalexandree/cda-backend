@@ -13,6 +13,15 @@ import { TokenSchema } from '@/auth/jwt.strategy';
 import { ZodValidationPipe } from '@/pipes/zod-validation';
 import { PrismaService } from '@/prisma/prisma.service';
 import { z } from 'zod';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiResponse,
+  ApiTags,
+  ApiOperation,
+} from '@nestjs/swagger';
+import { RedeemEmblemDto } from '@/dtos/redeem-emblem.dto';
+import { UserEmblemsDto } from '@/dtos/user-emblem.dto';
 
 const redeemEmblemBodySchema = z.object({
   emblemId: z.string().uuid(),
@@ -24,11 +33,28 @@ type RedeemEmblemBodySchema = z.infer<typeof redeemEmblemBodySchema>;
 
 @Controller('/redeem-emblem')
 @UseGuards(AuthGuard('jwt'))
+@ApiTags('Emblems')
+@ApiBearerAuth()
 export class RedeemEmblemController {
   constructor(private prisma: PrismaService) {}
 
   @Post()
   @HttpCode(201)
+  @ApiOperation({ summary: 'Redeem an emblem for the current user' })
+  @ApiBody({ type: RedeemEmblemDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Emblem successfully redeemed',
+    type: UserEmblemsDto,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'User already has this emblem',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'User or emblem not found',
+  })
   async handle(
     @Body(bodyValidationPipe) body: RedeemEmblemBodySchema,
     @CurrentUser() currentUser: TokenSchema,

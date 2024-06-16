@@ -4,6 +4,8 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { hash } from 'bcryptjs';
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/pipes/zod-validation';
+import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { CreateAccountDto } from '@/dtos/accounts.dto';
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -14,12 +16,19 @@ const createAccountBodySchema = z.object({
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
 
 @Controller('/accounts')
+@ApiTags('Accounts')
 export class CreateAccountController {
   constructor(private prisma: PrismaService) {}
 
   @Post()
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createAccountBodySchema))
+  @ApiBody({ type: CreateAccountDto })
+  @ApiResponse({ status: 201, description: 'User created successfully' })
+  @ApiResponse({
+    status: 409,
+    description: 'User with same email already exists',
+  })
   async handle(@Body() body: CreateAccountBodySchema) {
     const { name, email, password } = body;
 
