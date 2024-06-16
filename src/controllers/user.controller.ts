@@ -1,4 +1,11 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '@/auth/current-user-decorator';
 import { TokenSchema } from '@/auth/jwt.strategy';
@@ -9,7 +16,8 @@ import {
   ApiTags,
   ApiOperation,
 } from '@nestjs/swagger';
-import { UserDto, UserEmblemsDto } from '@/dtos/user.dto';
+import { UpdateProfileDto, UserDto, UserEmblemsDto } from '@/dtos/user.dto';
+import { hash } from 'bcryptjs';
 
 @Controller('/user')
 @UseGuards(AuthGuard('jwt'))
@@ -51,5 +59,44 @@ export class UserController {
     });
 
     return userEmblems?.emblems;
+  }
+
+  @Patch()
+  @ApiOperation({ summary: 'Update user profile' })
+  @ApiResponse({
+    status: 200,
+    description: 'User profile updated',
+    type: UserDto,
+  })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  async updateProfile(
+    @CurrentUser() currentUser: TokenSchema,
+    @Body() updateProfileDto: UpdateProfileDto,
+  ) {
+    const { name, email, password } = updateProfileDto;
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: currentUser.sub },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    // Update the user with the new values
+    const updatedUser = await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        name: name ?? undefined,
+        email: email ?? undefined,
+        password: password ? await hash(password, 8) : undefined,
+      },
+    });
+
+    return {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+    };
   }
 }
