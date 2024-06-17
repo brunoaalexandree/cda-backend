@@ -30,6 +30,9 @@ This is a simple project where users can register and redeem some badges if they
 
 So that's it, folks! ❤️
 
+### 🟢 Project on: [HERE](https://cda-frontend-tau.vercel.app)
+### 🟢 Api doc: [HERE](https://cda-backend.onrender.com/api)
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
