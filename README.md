@@ -22,9 +22,24 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+## About the project
+
+This project was made for a test by Cidade Alta.
+
+This is a simple project where users can register and redeem some badges if they manage to solve the challenge.
+
+So that's it, folks! ❤️
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Technologies
+
+<strong>The technologies used</strong>
+- [NodeJs](https://nodejs.org/en)
+- [NestJs](nestjs.com/)
+- [Swagger UI](https://swagger.io)
 
 ## Installation
 
@@ -36,27 +51,17 @@ $ pnpm install
 
 ```bash
 # development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
+$ pnpm start:dev
 
 # production mode
 $ pnpm run start:prod
 ```
 
-## Test
+## Points for improvements
 
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
+- [ ] authentication system
+- [ ] token expires
+- [ ] ...
 
 ## Support
 
