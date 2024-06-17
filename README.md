@@ -61,6 +61,7 @@ $ pnpm run start:prod
 
 - [ ] authentication system
 - [ ] token expires
+- [ ] add tests
 - [ ] ...
 
 ## Support
